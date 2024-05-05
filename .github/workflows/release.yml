@@ -11,17 +11,23 @@ name: Upload Release Asset
 
 jobs:
   build:
-    name: Upload Release Asset
-    runs-on: ubuntu-latest
+    name: Upload crossterm pre-built library
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+        backend: [crossterm]
+
+    runs-on: ${{ matrix.platform }}
+    
     steps:
       - uses: actions/checkout@v4
       - name: Build
         run: |
           mkdir -p zig-out/lib
-          echo hello > zig-out/lib/libtest.a
+          echo hello > zig-out/lib/libtest-${{ matrix.platform }}.a
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: zig-out/lib/libtest.a
+          files: zig-out/lib/libtest*.a
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
