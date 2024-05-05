@@ -32,6 +32,6 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: zig-out/lib/libtest*.a
+          files: zig-out/lib/libtest-${{ matrix.platform }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
