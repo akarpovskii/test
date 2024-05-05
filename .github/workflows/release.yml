@@ -25,6 +25,10 @@ jobs:
         run: |
           mkdir -p zig-out/lib
           echo hello > zig-out/lib/libtest-${{ matrix.platform }}.a
+
+      - name: Create tar.gz
+        run: tar -czf zig-out/lib/libtest-${{ matrix.platform }}.tar.gz zig-out/lib/libtest-${{ matrix.platform }}.a
+      
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
